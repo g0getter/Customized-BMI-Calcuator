@@ -10,6 +10,7 @@ import UIKit
 
 class CalculateViewController: UIViewController {
 
+    var calculatorBrain = CalculatorBrain()
     
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var weightLabel: UILabel!
@@ -38,13 +39,11 @@ class CalculateViewController: UIViewController {
         weightLabel.text = "\(integerValue)Kg"
     }
     
-    @IBAction func calcuatePressed(_ sender: UIButton) {
+    @IBAction func calculatePressed(_ sender: UIButton) {
         let height = heightSlider.value
         let weight = weightSlider.value
         
-        let bmi = weight / pow(height, 2)
-        
-        self.bmiValue = String(format: "%.1f", bmi)
+        calculatorBrain.calculateBMI(height: height, weight: weight)
         
         // !!
         performSegue(withIdentifier: "goToResult", sender: self) // Segue(세그웨이), sender: 누가 segue를 initiate하는지
@@ -55,7 +54,8 @@ class CalculateViewController: UIViewController {
         // !! Set the value
         if segue.identifier == "goToResult" {
             let destinationVC = segue.destination as? ResultViewController // as: DownCasting
-            destinationVC?.bmiValue = self.bmiValue
+            
+            destinationVC?.bmiValue = calculatorBrain.getBMIValue()//self.bmiValue
 //            segue.destination // segue가 trigger되면 initialize될 곳
         }
         

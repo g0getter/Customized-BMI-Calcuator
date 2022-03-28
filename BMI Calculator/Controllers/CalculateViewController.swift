@@ -56,7 +56,10 @@ class CalculateViewController: UIViewController {
             let destinationVC = segue.destination as? ResultViewController // as: DownCasting
             
             destinationVC?.bmiValue = calculatorBrain.getBMIValue()//self.bmiValue
+            destinationVC?.advice = calculatorBrain.getAdvice()
+            destinationVC?.color = calculatorBrain.getColor()
 //            segue.destination // segue가 trigger되면 initialize될 곳
+            
         }
         
     }

@@ -7,20 +7,44 @@
 //
 
 import Foundation
+import UIKit
 
 /// Calculate
 struct CalculatorBrain {
     
-    var bmiValue: Float?
+    var bmi: BMI?
+    
+//    var bmiValue: Float?
     
     mutating func calculateBMI(height: Float, weight: Float) {
-        bmiValue = weight / pow(height, 2)
+        let bmiValue = weight / pow(height, 2)
+        var advice = ""
+        var color: UIColor?
+        
+        if bmiValue < 18.5 {
+            advice = "Eat more pies!"
+            color = .blue
+        } else if bmiValue <= 24.9 {
+            advice = "Fit as a fiddle!"
+            color = .green
+        } else {
+            advice = "Eat less pies!"
+            color = .red
+        }
+        bmi = BMI(value: bmiValue, advice: advice, color: color)
     }
     
     func getBMIValue() -> String {
-        guard let bmi = bmiValue else { return "" }
-        let bmiString = String(format: "%.1f", bmi)
+        let bmiString = String(format: "%.1f", bmi?.value ?? 0.0)
         
         return bmiString
+    }
+    
+    func getAdvice() -> String? {
+        return bmi?.advice
+    }
+    
+    func getColor() -> UIColor? {
+        return bmi?.color
     }
 }
